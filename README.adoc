@@ -1,0 +1,100 @@
+= Sujet de TP 1 -- Découverte SOAP
+
+
+== Création de serveur
+
+
+Vous avez un modèle dans le module serveur permettant de gérer une application de pile ou face en ligne.
+Vous êtes invités à consulter Facade.java pour avoir une idée des différentes fonctionnalités.
+
+
+Nous voulons faire un web-service SOAP qui nous permettra de jouer.
+
+
+Vous devrez d'abord mettre à jour les dépendances respectives des modules serveur et client comme suit :
+
+[source, xml]
+----
+<dependencies>
+    <dependency>
+        <groupId>jakarta.xml.ws</groupId>
+        <artifactId>jakarta.xml.ws-api</artifactId>
+        <version>3.0.1</version>
+    </dependency>
+    <dependency>
+        <groupId>com.sun.xml.ws</groupId>
+        <artifactId>jaxws-rt</artifactId>
+        <version>3.0.2</version>
+    </dependency>
+    <dependency>
+        <groupId>com.sun.xml.ws</groupId>
+        <artifactId>jaxws-ri</artifactId>
+        <version>3.0.2</version>
+        <type>pom</type>
+    </dependency>
+</dependencies>
+----
+
+
+
+
+. Créez un package service ainsi qu'une classe ServicePileOuFace proposant les memes fonctionnalités que Facade mais qui encapsulera à l'intérieur une instance de FacadeImpl et délèguera à cette dernière toutes les fonctionnalités.
+
+. Déclarez cette classe comme un webservice avec @WebService (attention d'utiliser la bonne dépendance *jakarta.jws.*). Prenez soin d'annoter chacun de vos paramètres à avec
+@WebParam (celà permettra d'avoir une description cohérente des paramètres à partir du wsdl).
+
+. Créez un programme principal permettant de publier votre Web-service sur l'url :
+http://localhost:8080/pileouface en standalone (EndPoint.publish(...))
+
+. Vérifiez que le wsdl est accessible : http://localhost:8080/pileouface?wsdl
+
+
+
+== Client SOAPUI
+
+. Lancez SOAPUI
+. Créez un SOAP project tout en lui donnant le wsdl de votre web-service
+. Faites le scénario suivant :
+.. Yohan s'inscrit avec le pseudo Yoh et un mot de passe original Yoh
+.. Il se connecte ensuite à l'application et récupère ainsi un ID temporaire
+.. Il joue une partie en choisissant Pile
+.. Récupérez l'historique de ses parties
+.. Déconnectez l'utilisateur
+
+
+== Client Java
+
+Pour pouvoir créer un client Java, il va falloir procéder en plusieurs étapes :
+
+
+. Générer les classes métiers et permettant d'accèder au service grâce à wsimport
+
+. Créer un programme principal permettant de faire une autre partie avec Yohan et également afficher toutes les parties faites jusqu'à présent
+
+
+
+Petite configuration particulière dans le pom.xml pour récupérer l'outil de génération des classes :
+
+
+[source, xml]
+----
+ <build>
+    <plugins>
+        <plugin>
+            <groupId>com.sun.xml.ws</groupId>
+            <artifactId>jaxws-maven-plugin</artifactId>
+            <version>3.0.2</version>
+            <configuration>
+                <wsdlUrls>
+                    <wsdlUrl>url service ?wsdl</wsdlUrl>
+                </wsdlUrls>
+                <keep>true</keep>
+                <packageName>services</packageName>
+                <sourceDestDir>src/main/java</sourceDestDir>
+            </configuration>
+        </plugin>
+    </plugins>
+</build>
+----
+
+
