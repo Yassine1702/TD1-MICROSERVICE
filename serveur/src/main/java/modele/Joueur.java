@@ -27,7 +27,7 @@ public class Joueur {
 
         this.nbPartiesJouees++;
         Partie partie = new Partie(prediction, tirage);
-        if (partie.isPartieGagnante()) {
+        if (partie.getVerdict()) {
             this.nbPartiesGagnees++;
         }
         this.historique.add(partie);
