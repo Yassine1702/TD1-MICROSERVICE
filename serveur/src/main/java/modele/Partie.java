@@ -1,15 +1,13 @@
 package modele;
 
-import jakarta.xml.bind.annotation.XmlRootElement;
 
-import java.io.Serializable;
 
-@XmlRootElement
-public class Partie implements Serializable {
+
+public class Partie  {
 
     private String prediction;
     private String tirage;
-
+    private boolean verdict;
 
     public Partie() {
     }
@@ -17,6 +15,7 @@ public class Partie implements Serializable {
     public Partie(String prediction, String tirage) {
         this.prediction = prediction;
         this.tirage = tirage;
+        this.verdict = this.prediction.equals(this.tirage);
     }
 
 
@@ -36,8 +35,12 @@ public class Partie implements Serializable {
         this.tirage = tirage;
     }
 
-    public boolean isPartieGagnante() {
-        return this.prediction.equals(this.tirage);
+
+    public void setVerdict(boolean verdict){
+        this.verdict = verdict;
+    }
+    public boolean getVerdict() {
+        return verdict;
     }
 
 }

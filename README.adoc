@@ -43,6 +43,8 @@ Vous devrez d'abord mettre à jour les dépendances respectives des modules serv
 . Déclarez cette classe comme un webservice avec @WebService (attention d'utiliser la bonne dépendance *jakarta.jws.*). Prenez soin d'annoter chacun de vos paramètres à avec
 @WebParam (celà permettra d'avoir une description cohérente des paramètres à partir du wsdl).
 
+. Modifiez si besoin les objets métiers pour qu'ils soient compatibles avec la sérialization.
+
 . Créez un programme principal permettant de publier votre Web-service sur l'url :
 http://localhost:8080/pileouface en standalone (EndPoint.publish(...))
 
